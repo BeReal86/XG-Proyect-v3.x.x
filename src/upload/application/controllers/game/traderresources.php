@@ -20,7 +20,7 @@ use application\libraries\game\ResourceMarket;
 /**
  * Trader Class
  */
-class Trader extends Controller
+class TraderResources extends Controller
 {
     /**
      * The module ID
@@ -161,7 +161,7 @@ class Trader extends Controller
                     $this->planet['planet_id']
                 );
 
-                Functions::redirect('game.php?page=traderOverview&mode=traderResources');
+                Functions::redirect('game.php?page=traderResources');
             } else {
                 $this->error = $this->langs->line('tr_no_enough_dark_matter');
             }
@@ -183,7 +183,7 @@ class Trader extends Controller
                 array_merge(
                     $this->langs->language,
                     $this->setMessageDisplay(),
-                    $this->getMode()
+                    $this->getPage()
                 )
             )
         );
@@ -217,26 +217,18 @@ class Trader extends Controller
      *
      * @return array
      */
-    private function getMode(): array
+    private function getPage(): array
     {
-        $mode = filter_input(INPUT_GET, 'mode', FILTER_SANITIZE_STRING);
-        $template = '';
-
-        if (in_array($mode, ['traderResources', 'traderAuctioneer', 'traderScrap', 'traderImportExport'])) {
-            $view_to_get = strtolower(strtr($mode, ['trader' => '']));
-            $template = $this->getTemplate()->set(
-                'game/trader_' . $view_to_get . '_view',
+        return [
+            'current_mode' => $this->getTemplate()->set(
+                'game/trader_resources_view',
                 array_merge(
                     $this->langs->language,
                     [
-                        'list_of_resources' => $this->{'build' . ucfirst($view_to_get) . 'Section'}(),
+                        'list_of_resources' => $this->buildResourcesSection(),
                     ]
                 )
-            );
-        }
-
-        return [
-            'current_mode' => $template,
+            ),
         ];
     }
 
@@ -302,21 +294,4 @@ class Trader extends Controller
 
         return $refillOptions;
     }
-
-    private function buildAuctioneerSection(): array
-    {
-        return [];
-    }
-
-    private function buildScrapSection(): array
-    {
-        return [];
-    }
-
-    private function buildImportexportSection(): array
-    {
-        return [];
-    }
 }
-
-/* end of trader.php */
