@@ -7,7 +7,7 @@
  * @author   XG Proyect Team
  * @license  http://www.xgproyect.org XG Proyect
  * @link     http://www.xgproyect.org
- * @version  3.1.0
+ * @version  3.3.0
  */
 namespace application\controllers\game;
 
@@ -20,7 +20,6 @@ use application\libraries\FunctionsLib as Functions;
  */
 class TraderLayer extends Controller
 {
-
     const MODULE_ID = 5;
 
     /**
